@@ -5,17 +5,10 @@ import Bag from './Bag'
 import 'bootstrap/dist/css/bootstrap.css'
 import Home from './Home'
 import App from '../App'
-import { createContext, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 export const appcontext=createContext({})
 
 function ManageRoute() {
-  const [showMenu,setMenu] =useState(false)
-
-const actionMenu=()=>{
-  setMenu(!showMenu)
-  console.log(showMenu)
-}
-
 // darkmode 
 const [activeDarkMode,setDarkMode]=useState(false)
 const darkMode=()=>{
@@ -30,15 +23,31 @@ else{
   document.querySelector('body').style.color='black'
 
 }
+// get the data from api 
+const [data,setData]=useState([])
+
+const fetchData=()=>{
+  fetch('http://localhost:5173/api/data.json')
+  .then(res=>res.json())
+  .then(games=>setData(games))
+  .catch(e=>console.log(e.message))
+}
+ useEffect(()=>{
+  fetchData()
+ },[])
+  //console.log(data[0])
+
   return (
     <>
     <appcontext.Provider value={{
-      menuButton:showMenu,actionmenu:actionMenu,darkMode:darkMode,activeDarkMode:activeDarkMode
+      darkMode:darkMode,
+      activeDarkMode:activeDarkMode,
+      Data:data
     }} >
     <BrowserRouter>
     <div className="d-flex ">
     <App/>
-    <div className={`main ${activeDarkMode&&'shadow-lg'}shadow rounded m-2 p-2 `} style={{width:showMenu&&'90%',backgroundColor:activeDarkMode&&'#2d3441',boxShadow:activeDarkMode&&' 5 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.4)'}} >
+    <div className={`main shadow rounded m-2 `} style={{backgroundColor:activeDarkMode&&'#2d3441'}} >
     <Routes>
         <Route path='/'element={<Home/>} ></Route>
         <Route path='/categories' element={<Categories/>}></Route>
