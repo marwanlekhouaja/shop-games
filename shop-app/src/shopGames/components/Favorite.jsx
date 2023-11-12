@@ -1,7 +1,7 @@
 
 function Favorite() {
   return (
-    <div>Favorite</div>
+    <div className="favorite">Favorite</div>
   )
 }
 

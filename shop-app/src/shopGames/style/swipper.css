@@ -74,3 +74,12 @@
 .currentPrice{
     font-weight: bold;
 }
+.bagIcon{
+    position: relative;
+}
+.favoriteIcon{
+    position: relative;
+}
+.gamescard{
+    min-height: 110vh;
+}

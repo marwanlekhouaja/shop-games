@@ -35,14 +35,30 @@ const fetchData=()=>{
  useEffect(()=>{
   fetchData()
  },[])
-  //console.log(data[0])
+
+ // partie panier
+
+ const [panier,setPanier]=useState([])
+
+ const addToBag=(product)=>{
+  setPanier(prev=>[...prev,product])
+ } 
+
+ // delete order
+
+ const deleteOrder=(newProducts)=>{
+  setPanier(newProducts)  
+ }
 
   return (
     <>
     <appcontext.Provider value={{
       darkMode:darkMode,
       activeDarkMode:activeDarkMode,
-      Data:data
+      Data:data,
+      panier:panier,
+      actionBag:addToBag,
+      deleteOrder:deleteOrder
     }} >
     <BrowserRouter>
     <div className="d-flex ">

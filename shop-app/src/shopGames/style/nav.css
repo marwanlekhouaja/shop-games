@@ -6,6 +6,7 @@
     padding: 5px;
     width: 60%;
     border-radius: 9px;
+    transition: 1s all;
 }
 
 .slideMenu{
@@ -56,4 +57,18 @@ nav{
 }
 .activeDarkMode{
     transition: 1s all;
+}
+
+@media (max-width:800px) {
+    nav a .linkName{
+        display: none;
+    }    
+    a{
+        display: flex;
+        justify-content: center;
+        margin: auto;
+    }
+    h5{
+        display: none;
+    }
 }
