@@ -6,10 +6,6 @@
     box-sizing: border-box;
    
 }
-.main{
-    height: 100%;
-    width: 80%;
-}
 .numOrders{
     position: absolute;
     font-size: 10px;

@@ -1,6 +1,9 @@
 import { useContext } from "react";
 import { appcontext } from "./ManageRoute";
 import "bootstrap/dist/css/bootstrap.css";
+import {motion} from 'framer-motion'
+
+
 function Bag() {
   // get the product from panier from context api
   const context = useContext(appcontext);
@@ -16,7 +19,7 @@ function Bag() {
   return (
     <>
       <div className="bag">
-        <table className="container rounded mt-3 shadow table table-light text-center">
+        <motion.table  initial={{x:'100vh'}} animate={{x:0}} transition={{duration:1.1}} className="container rounded mt-3 shadow table table-light text-center">
           <thead>
             <tr>
               <th>title</th>
@@ -49,7 +52,7 @@ function Bag() {
               </tr>
             )}
           </tbody>
-        </table>
+        </motion.table>
       </div>
     </>
   );

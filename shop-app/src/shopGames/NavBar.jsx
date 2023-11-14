@@ -5,6 +5,7 @@ import { appcontext } from "./components/ManageRoute"
 function NavBar() {
     // links that show in side menu
     // const windowWidth=window.innerWidth;
+    // const body=document.querySelector('body').style.width
 
    const context=useContext(appcontext) 
    const navLinks=[
@@ -24,7 +25,7 @@ function NavBar() {
             <div key={nav.id} >
                 <NavLink  className={`linkMenu d-flex align-items-center m-auto mt-3 mb-3 `} style={{color:context.activeDarkMode?'white':'black'}}  to={nav.link} >
                     <span className={stylelinkIcon} >{nav.icon}</span>
-                    <span className="linkName">{nav.name}</span>
+                    <span className="linkName" >{nav.name}</span>
                 </NavLink>
             </div>
         ))}       

@@ -40,3 +40,14 @@
     border-radius: 6px;
 }
 
+.categorie .notfoundText{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 40px;
+}
+.marwan{
+    color: red;
+}

@@ -1,16 +1,18 @@
 import { useContext } from 'react';
 import 'bootstrap/dist/js/bootstrap';
 import 'bootstrap/dist/css/bootstrap.css'
-import '../style/section.css'; // Make sure to import your custom styles
+import '../style/section.css'; 
 import { appcontext } from './ManageRoute';
 import GamesCard from './GamesCard';
+import {motion} from 'framer-motion'
+
 
 function Section() {
   const context = useContext(appcontext);
 
   return (
     <>
-      <div className="section">
+      <motion.div initial={{x:'100vh'}} animate={{x:0}} transition={{duration:1.1}} className="section">
        <div className="game">
        <div id="carouselExampleIndicators" className="carouselParent carousel slide " data-bs-ride="carousel" data-bs-wrap="true">
         <div className="carousel-indicators">
@@ -31,12 +33,7 @@ function Section() {
           {context.Data.map((data, index) => (
             <div key={index} className={`carousel-item ${index === 0 ? 'active' : ''} rounded shadow-lg `}>
               <img src={data.img} style={{maxHeight:'280px'}} className="img_carousel d-block w-100 rounded" alt={`Slide ${index + 1}`} />
-              <h2>{data.title}</h2>  
-              <p>{data.description}</p>  
-              <div className="button order_now ">
-                <a href='#' >Order now !</a>
-              </div>
-              
+             
             </div>
           ))}
         </div>
@@ -51,9 +48,9 @@ function Section() {
       </div> 
      </div>         
       
-      </div>
+      </motion.div>
       <div className='games_card'>
-        <h2 style={{fontFamily:'monospace',marginTop:'7px'}}>games available</h2>
+        <motion.h2  initial={{opacity:'0'}} animate={{opacity:1}} transition={{duration:3}} style={{fontFamily:'monospace',marginTop:'7px'}}>games more buying</motion.h2>
         <GamesCard/>
       </div>
     </>

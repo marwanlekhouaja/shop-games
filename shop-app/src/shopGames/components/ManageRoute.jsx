@@ -4,8 +4,8 @@ import Favorite from './Favorite'
 import Bag from './Bag'
 import 'bootstrap/dist/css/bootstrap.css'
 import Home from './Home'
-import App from '../App'
 import { createContext, useEffect, useState } from 'react'
+import SideMenu from '../SideMenu'
 export const appcontext=createContext({})
 
 function ManageRoute() {
@@ -50,20 +50,45 @@ const fetchData=()=>{
   setPanier(newProducts)  
  }
 
-  return (
-    <>
-    <appcontext.Provider value={{
+ // add to favorite
+ const [favorite,setFavorite] = useState([])
+  const addToFavorite=(order)=>{
+    setFavorite(prev=>[...prev,order])
+  }
+
+  const deletToFavorite=(order)=>{
+    setFavorite(order)
+  }
+
+
+ // partie menu 
+ const menu=()=>{
+  alert('test test test')
+ }
+
+ // tous les fonctions et data qui utlise sur le context api
+
+ const globalData={
       darkMode:darkMode,
       activeDarkMode:activeDarkMode,
       Data:data,
       panier:panier,
       actionBag:addToBag,
-      deleteOrder:deleteOrder
-    }} >
+      deleteOrder:deleteOrder,
+      addToFavorite:addToFavorite,
+      favorite:favorite,
+      menu:menu,
+      deletToFavorite:deletToFavorite
+ }
+  return (
+    <>
+    <appcontext.Provider value={ globalData } >
     <BrowserRouter>
+    
     <div className="d-flex ">
-    <App/>
-    <div className={`main shadow rounded m-2 `} style={{backgroundColor:activeDarkMode&&'#2d3441'}} >
+    {/* <ion-icon name="menu-outline"></ion-icon> */}
+    <SideMenu/>
+    <div className={`main shadow rounded m-2 `} style={{backgroundColor:activeDarkMode&&'#2d3441',height:'100%',width:'80%'}} >
     <Routes>
         <Route path='/'element={<Home/>} ></Route>
         <Route path='/categories' element={<Categories/>}></Route>

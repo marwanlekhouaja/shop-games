@@ -1,18 +1,19 @@
 import { useContext} from "react"
 import { appcontext } from "./ManageRoute"
+import {motion} from 'framer-motion'
 
 function GamesCard() {
   const context=useContext(appcontext)  
   
   // const [activeHeart,setActiveHeart]=useState(false)
-  const makeHeart=()=>{
-    // context.Data.find((t)=>{
-    //   if(Number(t.id) === Number(id)){
-    //     setActiveHeart(!activeHeart)
-    //     console.log(activeHeart);
-    //   }
-    // }) 
-  }
+  const data=context.Data
+  // const [test,setTest]=useState(data)
+  // const makeHeart=(id)=>{
+  //   const newValues=test.map((t)=>
+  //   t.id === id ? {...t,heart:!t.heart} : t
+  //   )  
+  //   setTest(newValues)          
+  // }
 
   //add a product to the bag
   
@@ -27,8 +28,8 @@ function GamesCard() {
  
   return (
     <div className="gamescard">
-    <div className="" style={{flexWrap:'wrap',width:'100%',display:'flex',justifyContent:'space-evenly'}}>
-        {context.Data.slice(0,8).map((game)=>(
+    <motion.div initial={{y:'200vh'}} animate={{y:0}} transition={{duration:1.1}} style={{flexWrap:'wrap',width:'100%',display:'flex',justifyContent:'space-evenly'}}>
+        {data.slice(0,8).map((game)=>(
             <div className=" shadow-lg p-1  me-2 mb-3 mt-3 rounded-4 flex-column d-flex" key={game.id}>
                 <img className="img_card" src={game.img} style={{borderRadius:'1rem',width:'220px',height:'150px'}} alt="" />
                 <span style={{fontFamily:'monospace',textAlign:'center',marginTop:'7px'}}>{game.title}</span>
@@ -44,12 +45,12 @@ function GamesCard() {
                 </span>
                 <div className="featured">
                     <button title="add to your bag" className="add fs-3" style={{background:'none',border:'none',color:context.activeDarkMode&&'white'}}  ><ion-icon name="cart-outline" onClick={()=>addProduct(game)}></ion-icon></button>
-                    <button title='add product to your favorite' className={`heart fs-3`} style={{background:'none',border:'none',color:context.activeDarkMode&&'white'}}  onClick={()=>makeHeart(game.id)} ><ion-icon name={`heart-outline`}></ion-icon></button>
+                    {/* <button title='add product to your favorite' className={`heart fs-3 ${game.heart?'text-danger':'text-dark'} `} style={{background:'none',border:'none',color:context.activeDarkMode&&'white'}}  onClick={()=>makeHeart(game.id)} ><ion-icon name={`heart-outline`}></ion-icon></button> */}
                 </div>
             </div>
         ))}
         
-    </div>
+    </motion.div>
     </div>
   )
 }

@@ -1,56 +1,74 @@
 import { useContext, useEffect, useRef, useState} from "react"
 import { appcontext } from "./ManageRoute"
+import { Link } from "react-router-dom";
+import {motion} from 'framer-motion'
+
+
 
 function Categories() {
-  const feature=[
+  const body=document.querySelector('body').style.width
+  const [feature,setFeature]=useState([
     {id:1,name:'All',active:true},
     {id:2,name:'RPG',active:false},
     {id:3,name:'MOBA',active:false},
     {id:4,name:'Battle',active:false},
     {id:5,name:'Racing',active:false},
     {id:6,name:'Fighting',active:false}
-  ]
+  ])
 
-
+ 
   const context = useContext(appcontext);
+  // get data of games from contextapi 
   let backup = context.Data;
-  const [filteredData, setFilteredData] = useState(backup);
+  const [filteredData,setFilterData]=useState(backup)
 
-  const filterGames = (category) => {
-    if (category === 'All') {
-      setFilteredData(backup); // Show all products
-    } else {
-      const filteredProducts = backup.filter((item) => item.category === category);
-      setFilteredData(filteredProducts);
+  const filterGames=(categorie)=>{
+    const updateFeature=feature.map((f)=>
+     f.name === categorie ? {...f,active:true} : {...f,active:false}
+    )
+    setFeature(updateFeature)
+    
+    if(categorie === 'All'){
+      setFilterData(backup)
+    }    
+    else{
+      const filterProduct=backup.filter((game) => game.category === categorie )
+      setFilterData(filterProduct)
     }
-  };
-
-  useEffect(() => {
-    setFilteredData(backup)
-  }, [backup]);
-
-  const refSearch=useRef()
-  
-  const search = () => {
-    const searchTerm = refSearch.current.value.toLowerCase();
-    if (searchTerm.length === 0) {
-      alert('Please enter a search term');
-    } else {
-      const filteredProducts = backup.filter((item) =>
-        item.title.toLowerCase().includes(searchTerm)
-      );
-      setFilteredData(filteredProducts);
-    }
-  };
-  
-  const makeHeart=()=>{
-    // context.Data.find((t)=>{
-    //   if(Number(t.id) === Number(id)){
-    //     setActiveHeart(!activeHeart)
-    //     console.log(activeHeart);
-    //   }
-    // }) 
   }
+   const refSearch=useRef()
+
+   useEffect(()=>{
+    setFilterData(backup)
+   },[backup])
+
+   const search=()=>{
+    const searchValue=refSearch.current.value.toLowerCase()
+    if(searchValue.length !==0 ){
+      const filterSearch=backup.filter((game)=> game.title.toLowerCase().includes(searchValue) )
+      setFilterData(filterSearch)
+    }
+    else{
+      setFilterData(backup)
+    }
+   }
+
+   const makeHeart = (game) => {
+     const updatedData = filteredData.map((r) =>
+       r.id === game.id ? { ...r, heart: !r.heart } : r,
+       
+     );
+     setFilterData(updatedData);
+    //  console.log(filterData)
+     let data={...game}
+     data={...game,idGame:Date.now(),heart:true}
+     context.addToFavorite(data)      
+ 
+   };
+   
+  
+   
+ 
 
   //add a product to the bag
   
@@ -61,14 +79,38 @@ function Categories() {
     // console.log(newProduct)
     alert('the product add succefully to your bag !')
   }
-  
+
+  const styleLink=`text-decoration-none ${context.activeDarkMode?'text-light':'text-dark'}`
+
+  const activeDarkMode=()=>{
+    context.darkMode()
+  }
  
 
   return (
-    <div className="categorie container-fluid mt-2">
-      <div className="row d-flex align-items-center justify-content-between">
-        <div className="col-lg-8">
-          <div className="filters">
+    <div className="categorie container-fluid">
+      <header>
+        <div className={`menuButton fs-3 d-flex align-items-center justify-content-end`}>
+
+            <span style={{cursor:'pointer'}} onClick={activeDarkMode} className="darkMode me-2 mt-1 activeDarkMode">
+              <ion-icon name={`${context.activeDarkMode?'sunny-outline':'moon-outline'}`}></ion-icon>
+            </span>
+
+            <span style={{cursor:'pointer'}} className="bagIcon me-3">
+              <Link className={styleLink} to='/bag'><ion-icon name="cart-outline"></ion-icon></Link>
+            </span>
+            <span className="numOrders">{context.panier.length}</span>
+            <span style={{cursor:'pointer'}} className="favoriteIcon " >
+              <Link className={styleLink} to='/favorite' ><ion-icon name="heart-outline"></ion-icon></Link>
+            </span>
+            <span className="numFavorite">{context.favorite.length}</span>
+          </div>
+
+      </header>
+
+      <div className="container row d-flex align-items-center justify-content-between">
+        <div className="col-lg-9">
+          <div style={{gap:body<=800 ? '20px' : ''}} className={`filters ${body<=800 ? 'd-flex justify-content-center' : ''}`}>
             {feature.map((f)=>(
               <div key={f.id} > 
                  <span onClick={()=>filterGames(f.name)} className={`${f.active?'activeCategorie':''} feature`}>{f.name}</span>              
@@ -76,7 +118,7 @@ function Categories() {
             ))}
           </div>
         </div>
-        <div className="col-lg-4 search ">
+        <div className="col-lg-3 search ">
           <input type="search" placeholder="search games ..." className="shadow-lg search_bar form-control border-primary" ref={refSearch} />    
           <button onClick={search} className="searchButton"><ion-icon name="search-outline"></ion-icon></button>      
         </div>
@@ -84,12 +126,18 @@ function Categories() {
 
       {/* games */}
 
-      <div className="" style={{flexWrap:'wrap',width:'100%',display:'flex',justifyContent:'space-evenly'}}>
-        {filteredData.map((game)=>(
+      <motion.div initial={{y:'200vh'}} animate={{y:0}} transition={{duration:1.1}} className="" style={{flexWrap:'wrap',width:'100%',display:'flex',justifyContent:'space-evenly'}}>
+
+        {filteredData.length!==0?filteredData.map((game)=>(
+
             <div className=" shadow-lg p-1  me-2 mb-3 mt-3 rounded-4 flex-column d-flex" key={game.id}>
+
                 <img className="img_card" src={game.img} style={{borderRadius:'1rem',width:'220px',height:'150px'}} alt="" />
+
                 <span style={{fontFamily:'monospace',textAlign:'center',marginTop:'7px'}}>{game.title}</span>
+
                 <span className="text-center ">{game.rating==3 ? '⭐⭐⭐' : game.rating==4 ? '⭐⭐⭐⭐' :game.rating&& '⭐⭐⭐⭐⭐' }</span>
+
                 <span>
                   {game.discount !=0 ?
                   <div className="d-flex justify-content-between  align-items-center mt-2">
@@ -99,18 +147,24 @@ function Categories() {
                   </div>
                   : <span className="currentPrice d-flex justify-content-center mt-2">{game.price} $</span> }
                 </span>
+
                 <div className="featured">
                     <button title="add to your bag" className="add fs-3" style={{background:'none',border:'none',color:context.activeDarkMode&&'white'}}  ><ion-icon name="cart-outline" onClick={()=>addProduct(game)}></ion-icon></button>
-                    <button title='add product to your favorite' className={`heart fs-3`} style={{background:'none',border:'none',color:context.activeDarkMode&&'white'}}  onClick={()=>makeHeart(game.id)} ><ion-icon name={`heart-outline`}></ion-icon></button>
+                    <button title='add product to your favorite' className={`heart fs-3 ${game.heart?'text-danger':'text-dark'}`} style={{background:'none',border:'none',color:context.activeDarkMode&&'white'}}
+                      onClick={context.favorite.includes(game) ? 
+                         ()=> context.deletToFavorite(game) :  ()=>makeHeart(game)} >
+                        <ion-icon name={`${game.heart?'heart':'heart-outline'}`}></ion-icon>
+                    </button>
                 </div>
             </div>
-        ))}
+        )) : <span className="notfoundText">item not found !</span>  }
         
-    </div>
+    </motion.div>
 
 
     </div>
   )
+ 
 }
 
 export default Categories
