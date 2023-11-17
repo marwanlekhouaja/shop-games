@@ -10,6 +10,22 @@ export const appcontext=createContext({})
 
 function ManageRoute() {
 // darkmode 
+const [body, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []); 
+
+
 const [activeDarkMode,setDarkMode]=useState(false)
 const darkMode=()=>{
   setDarkMode(!activeDarkMode)  
@@ -62,9 +78,7 @@ const fetchData=()=>{
 
 
  // partie menu 
- const menu=()=>{
-  alert('test test test')
- }
+
 
  // tous les fonctions et data qui utlise sur le context api
 
@@ -77,9 +91,23 @@ const fetchData=()=>{
       deleteOrder:deleteOrder,
       addToFavorite:addToFavorite,
       favorite:favorite,
-      menu:menu,
-      deletToFavorite:deletToFavorite
+      deleteToFavorite:deletToFavorite,
+      bodyWidth:body
  }
+
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []); 
   return (
     <>
     <appcontext.Provider value={ globalData } >
@@ -88,7 +116,7 @@ const fetchData=()=>{
     <div className="d-flex ">
     {/* <ion-icon name="menu-outline"></ion-icon> */}
     <SideMenu/>
-    <div className={`main shadow rounded m-2 `} style={{backgroundColor:activeDarkMode&&'#2d3441',height:'100%',width:'80%'}} >
+    <div className={`main shadow rounded m-2 `} style={{backgroundColor:activeDarkMode&&'#2d3441',height:'100%',width:body>800?'80%':'100%'}} >
     <Routes>
         <Route path='/'element={<Home/>} ></Route>
         <Route path='/categories' element={<Categories/>}></Route>

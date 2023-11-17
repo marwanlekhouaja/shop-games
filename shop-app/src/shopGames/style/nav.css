@@ -3,10 +3,11 @@
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     margin-top: 20px;
     margin-bottom:20px;
-    padding: 5px;
+    padding: 7px;
     width: 60%;
     border-radius: 9px;
     transition: 1s all;
+    gap:6px;
 }
 
 .slideMenu{
@@ -19,26 +20,7 @@
 nav .active{
     background-color: cornflowerblue;
 }
-.numOrders{
-    position: absolute;
-    font-size: 12px;
-    right:52px;
-    top: 30px;
-    border-radius: 50%;
-    padding-left: 3px;
-    padding-right: 3px;
-    background-color: cornflowerblue;
-}
-.numFavorite{
-    position: absolute;
-    right:15px;
-    top: 30px;
-    font-size: 12px;
-    border-radius: 50%;
-    padding-left: 3px;
-    padding-right: 3px;
-    background-color: cornflowerblue;
-}
+
 .bag{
     position: relative;
 }
@@ -57,18 +39,4 @@ nav{
 }
 .activeDarkMode{
     transition: 1s all;
-}
-
-@media (max-width:800px) {
-    nav a .linkName{
-        display: none;
-    }    
-    a{
-        display: flex;
-        justify-content: center;
-        margin: auto;
-    }
-    h5{
-        display: none;
-    }
 }

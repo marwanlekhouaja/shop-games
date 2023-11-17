@@ -83,3 +83,15 @@
 .gamescard{
     min-height: 110vh;
 }
+.item .img_card{
+    width:220px;
+    height:150px
+}
+@media (max-width:500px) {
+    .item{
+        width: 100%;
+    }    
+    .item .img_card{
+        width:100%
+    }
+}

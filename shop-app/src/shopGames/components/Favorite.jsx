@@ -1,23 +1,30 @@
 import { useContext} from "react";
 import { appcontext } from "./ManageRoute";
 import {motion} from 'framer-motion'
+import SideMenuRes from "./SideMenuRes";
 
 
 
 function Favorite() {
   const context = useContext(appcontext);
   const data = context.favorite;
-  // const [games,setGames]= useState(data)
-  console.log(data);
 
   const makeHeart=(game)=>{
    
     const order=data.filter((d)=> d.idGame !== game.idGame)
 
-    context.deletToFavorite(order)
+    context.deleteToFavorite(order)
   }
+   
   return (
     <>
+      <SideMenuRes/>
+      <div className="d-flex justify-content-start">
+         <span style={{cursor:'pointer',display:context.bodyWidth<800?'block':'none'}} data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling" className="fs-3">
+          <ion-icon name="menu-outline"></ion-icon>
+         </span>
+
+      </div>
       <motion.div
         initial={{y:'200vh'}}
         animate={{y:0}}

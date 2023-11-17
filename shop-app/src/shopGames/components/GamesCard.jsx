@@ -30,8 +30,8 @@ function GamesCard() {
     <div className="gamescard">
     <motion.div initial={{y:'200vh'}} animate={{y:0}} transition={{duration:1.1}} style={{flexWrap:'wrap',width:'100%',display:'flex',justifyContent:'space-evenly'}}>
         {data.slice(0,8).map((game)=>(
-            <div className=" shadow-lg p-1  me-2 mb-3 mt-3 rounded-4 flex-column d-flex" key={game.id}>
-                <img className="img_card" src={game.img} style={{borderRadius:'1rem',width:'220px',height:'150px'}} alt="" />
+            <div className="item shadow-lg p-1  me-2 mb-3 mt-3 rounded-4 flex-column d-flex" key={game.id}>
+                <img className="img_card" src={game.img} style={{borderRadius:'1rem'}} alt="" />
                 <span style={{fontFamily:'monospace',textAlign:'center',marginTop:'7px'}}>{game.title}</span>
                 <span className="text-center ">{game.rating==3 ? '⭐⭐⭐' : game.rating==4 ? '⭐⭐⭐⭐' :game.rating&& '⭐⭐⭐⭐⭐' }</span>
                 <span>
@@ -44,8 +44,10 @@ function GamesCard() {
                   : <span className="currentPrice d-flex justify-content-center mt-2">{game.price} $</span> }
                 </span>
                 <div className="featured">
-                    <button title="add to your bag" className="add fs-3" style={{background:'none',border:'none',color:context.activeDarkMode&&'white'}}  ><ion-icon name="cart-outline" onClick={()=>addProduct(game)}></ion-icon></button>
-                    {/* <button title='add product to your favorite' className={`heart fs-3 ${game.heart?'text-danger':'text-dark'} `} style={{background:'none',border:'none',color:context.activeDarkMode&&'white'}}  onClick={()=>makeHeart(game.id)} ><ion-icon name={`heart-outline`}></ion-icon></button> */}
+                    <button title="add to your bag" className="add fs-3" style={{background:'none',border:'none',color:context.activeDarkMode&&'white'}}  >
+                      <ion-icon name="cart-outline" onClick={()=>addProduct(game)}></ion-icon>
+                    </button>
+                    
                 </div>
             </div>
         ))}

@@ -2,11 +2,26 @@ import { useContext } from "react";
 import { appcontext } from "./ManageRoute";
 import "bootstrap/dist/css/bootstrap.css";
 import {motion} from 'framer-motion'
-
+import SideMenuRes from "./SideMenuRes";
 
 function Bag() {
   // get the product from panier from context api
   const context = useContext(appcontext);
+
+  // calcul total price
+  let totalPrice=0
+
+  for(let i=0;i<context.panier.length;i++){
+    if(context.panier[i].discount !==0){
+      parseFloat(totalPrice+=context.panier[i].discount*context.panier[i].price)
+      
+    }
+    else{
+      parseFloat(totalPrice+=context.panier[i].price )
+    }
+  }
+
+ 
 
   //remove product
   const removeProduct=(id)=>{
@@ -16,9 +31,16 @@ function Bag() {
     context.deleteOrder(filter)
    }
   }
+
+ 
   return (
     <>
       <div className="bag">
+      <SideMenuRes/>
+      <div className="d-flex justify-content-start">
+         <span style={{cursor:'pointer',display:context.bodyWidth<800?'block':'none'}}  data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling" className="fs-3"><ion-icon name="menu-outline"></ion-icon></span>
+
+      </div>
         <motion.table  initial={{x:'100vh'}} animate={{x:0}} transition={{duration:1.1}} className="container rounded mt-3 shadow table table-light text-center">
           <thead>
             <tr>
@@ -29,6 +51,7 @@ function Bag() {
             </tr>
           </thead>
           <tbody>
+            
             {context.panier.length !== 0 ? (
               context.panier.map((game) => (
                 <tr key={game.idGame}>
@@ -53,6 +76,7 @@ function Bag() {
             )}
           </tbody>
         </motion.table>
+        <span className="text-end d-flex justify-content-end">Total price : {totalPrice.toFixed(2)} $</span>
       </div>
     </>
   );

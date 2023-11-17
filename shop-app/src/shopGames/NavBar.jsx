@@ -3,10 +3,6 @@ import {NavLink } from "react-router-dom"
 import { appcontext } from "./components/ManageRoute"
 
 function NavBar() {
-    // links that show in side menu
-    // const windowWidth=window.innerWidth;
-    // const body=document.querySelector('body').style.width
-
    const context=useContext(appcontext) 
    const navLinks=[
     {id:1,link:'/',name:'Home',icon:<ion-icon name="home-outline"></ion-icon>},
@@ -16,7 +12,7 @@ function NavBar() {
    ] 
    
 
-   const stylelinkIcon = `mt-1 linkIcon me-3`;
+   const stylelinkIcon = `mt-1 linkIcon `;
 
   return (
     <>
