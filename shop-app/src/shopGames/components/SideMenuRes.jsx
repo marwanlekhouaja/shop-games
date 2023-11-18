@@ -3,7 +3,9 @@ import { useContext } from 'react'
 import NavBar from '../NavBar'
 import { appcontext } from './ManageRoute'
 function SideMenuRes() {
+  // components of side menu when the screen of the page is < 800 this componenet will show as a navbar
   const context=useContext(appcontext)  
+
   return (
     <>
     <div className="offcanvas offcanvas-start shadow-lg" style={{color:context.activeDarkMode?'white':'black',backgroundColor:context.activeDarkMode?'#2d3441':'white'}} data-bs-scroll="true" data-bs-backdrop="false"  id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">

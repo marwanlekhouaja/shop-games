@@ -1,7 +1,9 @@
 import { useContext } from "react";
-import { appcontext } from "./ManageRoute";
+import { appcontext } from "../ManageRoute";
 import { Link } from "react-router-dom";
-import SideMenuRes from "./SideMenuRes";
+import SideMenuRes from "../SideMenuRes";
+import SideCart from "../cart/sideCart";
+import 'bootstrap/dist/js/bootstrap'
 
 function Header() {
   const context=useContext(appcontext)
@@ -27,12 +29,14 @@ function Header() {
               <ion-icon name={`${context.activeDarkMode?'sunny-outline':'moon-outline'}`}></ion-icon>
             </span>
 
-            <span style={{cursor:'pointer'}} className="bagIcon me-3">
-              <Link className={styleLink} to='/bag'><ion-icon name="cart-outline"></ion-icon></Link>
+           
+            <span style={{cursor:'pointer'}} className="bagIcon me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling2" aria-controls="offcanvasScrolling">
+            <SideCart/>
+              <ion-icon name="cart-outline"></ion-icon>
             </span>
             <span className="numOrders">{context.panier.length}</span>
             <span style={{cursor:'pointer'}} className="favoriteIcon " >
-              <Link className={styleLink} to='/favorite' ><ion-icon name="heart-outline"></ion-icon></Link>
+              <Link className={styleLink} to='/favorite'><ion-icon name="heart-outline"></ion-icon></Link>
             </span>
             <span className="numFavorite">{context.favorite.length}</span>
           </div>

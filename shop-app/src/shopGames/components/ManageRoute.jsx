@@ -3,7 +3,7 @@ import Categories from './Categories'
 import Favorite from './Favorite'
 import Bag from './Bag'
 import 'bootstrap/dist/css/bootstrap.css'
-import Home from './Home'
+import Home from './mainPage/Home'
 import { createContext, useEffect, useState } from 'react'
 import SideMenu from '../SideMenu'
 export const appcontext=createContext({})
@@ -103,7 +103,6 @@ const fetchData=()=>{
 
     window.addEventListener("resize", handleResize);
 
-    // Cleanup the event listener on component unmount
     return () => {
       window.removeEventListener("resize", handleResize);
     };

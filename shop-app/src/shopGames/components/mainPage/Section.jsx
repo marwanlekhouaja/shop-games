@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import 'bootstrap/dist/js/bootstrap';
 import 'bootstrap/dist/css/bootstrap.css'
-import '../style/section.css'; 
-import { appcontext } from './ManageRoute';
+import './style/section.css' 
+import { appcontext } from '../ManageRoute';
 import GamesCard from './GamesCard';
 import {motion} from 'framer-motion'
 

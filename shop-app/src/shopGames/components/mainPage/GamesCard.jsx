@@ -1,5 +1,5 @@
 import { useContext} from "react"
-import { appcontext } from "./ManageRoute"
+import { appcontext } from "../ManageRoute"
 import {motion} from 'framer-motion'
 
 function GamesCard() {
